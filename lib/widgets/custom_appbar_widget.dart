@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 
+
 class CustomAppBarWidget extends StatelessWidget {
   final String title;
-  const CustomAppBarWidget({Key? key,required this.title}) : super(key: key);
+  final Widget modal;
+
+  CustomAppBarWidget({Key? key, required this.title, required this.modal}) : super(key: key);
+
+  void _startAddNewQuitPeriod(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return  modal;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 65,
-      padding: EdgeInsets.all(20),
+      height: 70,
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -16,7 +28,7 @@ class CustomAppBarWidget extends StatelessWidget {
             color: Colors.black.withOpacity(0.1),
             spreadRadius: 3,
             blurRadius: 10,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: const Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -30,9 +42,13 @@ class CustomAppBarWidget extends StatelessWidget {
                 color: Colors.black.withOpacity(0.4),
                 fontWeight: FontWeight.w700),
           ),
-          Icon(
-            Icons.add,
-            color: Colors.black.withOpacity(0.4),
+// Button color
+          InkWell(
+            onTap: () => _startAddNewQuitPeriod(context),
+            child: Icon(
+              Icons.add,
+              color: Colors.black.withOpacity(0.4),
+            ),
           ),
         ],
       ),
