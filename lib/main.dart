@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quit/screens/home_screen.dart';
 import 'package:quit/screens/quit_period_screen.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TableBasicsExample(),
+      home: HomeScreen(),
     );
   }
 }
