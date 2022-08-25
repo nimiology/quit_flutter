@@ -9,17 +9,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Quit',
-      //     style: TextStyle(
-      //         color: Colors.black.withOpacity(0.4),
-      //         fontWeight: FontWeight.w700),
-      //   ),
-      //   flexibleSpace: Container(
-      //     color: Colors.white,
-      //   ),
-      // ),
       body: SafeArea(
         child: Column(children: [
           CustomAppBarWidget(title: "Quit"),

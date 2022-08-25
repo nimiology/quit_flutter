@@ -14,7 +14,7 @@ class QuitPeriodScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBarWidget(title: "Quit Period"),
-            SizedBox(height: 10,),
+            SizedBox(height: 5,),
             const CalenderWidget(),
             Container(
                 margin: EdgeInsets.only(top: 30),
