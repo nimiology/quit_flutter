@@ -16,42 +16,51 @@ class _DoingWidgetState extends State<DoingWidget> {
     Color errorColor = Theme.of(context).errorColor;
     Doing doing = widget.doing;
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-
-          gradient: LinearGradient(
-              colors: [errorColor, errorColor.withOpacity(0.7)]),
+          gradient:
+              LinearGradient(colors: [errorColor, errorColor.withOpacity(0.7)]),
           boxShadow: [
             BoxShadow(
               color: errorColor.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 10,
-              offset: Offset(0, 3), // changes position of shadow
+              offset: const Offset(0, 3), // changes position of shadow
             ),
           ],
         ),
         child: ListTile(
           title: Text(
-            '${doing.date.hour}:${doing.date.minute}',
-            style: TextStyle(color: Colors.white),
+            '${doing.createdDate.hour}:${doing.createdDate.minute}',
+            style: const TextStyle(color: Colors.white),
           ),
           subtitle: Text(
             '${doing.why}',
-            style: TextStyle(color: Colors.white70),
+            style: const TextStyle(color: Colors.white70),
           ),
-          trailing: Container(
+          trailing: SizedBox(
             width: 65,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.edit),
-                SizedBox(
+                InkWell(
+                  onTap: () => print('sdf'),
+                  child: Icon(
+                    Icons.edit,
+                    color: Colors.black.withOpacity(0.4),
+                  ),
+                ),
+                const SizedBox(
                   width: 15,
                 ),
-                Icon(
-                  Icons.delete,
+                InkWell(
+                  onTap: () => print('sdf'),
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.black.withOpacity(0.4),
+                  ),
                 ),
               ],
             ),
