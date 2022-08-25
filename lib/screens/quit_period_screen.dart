@@ -1,3 +1,17 @@
+import 'dart:math';
+
+import 'dart:math';
+
+import 'dart:math';
+
+import 'dart:math';
+
+import 'dart:math';
+
+import 'dart:math';
+
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../providers/doing_provider.dart';
@@ -27,13 +41,13 @@ class TableBasicsExample extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.only(top: 17.5),
               children: [
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
-                DoingWidget(doing: Doing(date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
+                DoingWidget(doing: Doing(id: Random().nextInt(200), date: DateTime.now(), why: "Hello")),
               ],
             ),
           )

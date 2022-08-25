@@ -17,18 +17,51 @@ class _DoingWidgetState extends State<DoingWidget> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
+      child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
-        color: Theme.of(context).accentColor,
-      ),
-      child: ListTile(
-        title: Text(
-          '${doing.date.hour}:${doing.date.minute}',
-          style: TextStyle(color: Colors.white),
-        ),
-        subtitle: Text(
-          '${doing.why}',
-          style: TextStyle(color: Colors.white70),
+        child: Dismissible(
+          key: ObjectKey(doing.id),
+          background: Container(
+            alignment: Alignment.centerRight,
+            padding: const EdgeInsets.only(right: 20),
+            decoration: BoxDecoration(
+              // borderRadius: BorderRadius.circular(25),
+              color: Theme.of(context).errorColor,
+            ),
+            child: const Icon(
+              Icons.delete,
+              size: 30,
+            ),
+          ),
+          onDismissed: (direction) {
+            setState(() {});
+          },
+          child: Container(
+            color: Theme.of(context).accentColor,
+            child: ListTile(
+              title: Text(
+                '${doing.date.hour}:${doing.date.minute}',
+                style: TextStyle(color: Colors.white),
+              ),
+              subtitle: Text(
+                '${doing.why}',
+                style: TextStyle(color: Colors.white70),
+              ),
+              trailing: Container(
+                width: 50,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.edit),
+                    Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );
