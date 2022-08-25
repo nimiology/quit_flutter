@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/period_widget.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -11,10 +13,17 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: (){},
+        onPressed: () {},
       ),
       body: ListView(
-        children: [],
+        children: [
+          PeriodWidget(),
+          PeriodWidget(),
+          PeriodWidget(),
+          PeriodWidget(),
+          PeriodWidget(),
+          PeriodWidget(),
+        ],
       ),
     );
   }
