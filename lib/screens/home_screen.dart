@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quit/widgets/new_quit_period_widget.dart';
 
 import '../providers/quit_period.dart';
@@ -16,12 +17,13 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
-        return  NewQuitPeriod(callSetState: (){setState((){});},);
+        return  NewQuitPeriod();
       },
     );
   }
   @override
   Widget build(BuildContext context) {
+    QuitPeriod quitPeriod = Provider.of<QuitPeriod>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(children: [
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Colors.black.withOpacity(0.1),
                   spreadRadius: 3,
                   blurRadius: 10,
-                  offset: const Offset(0, 3), // changes position of shadow
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -60,9 +62,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Flexible(
-            child: FutureBuilder<List>(
-              future: QuitPeriod.getQuitPeriods(),
-              builder: (BuildContext context, AsyncSnapshot<List> snapshot){
+            child: FutureBuilder<Map<String, QuitPeriodItem>>(
+              future: quitPeriod.getQuitPeriods(),
+              builder: (BuildContext context, AsyncSnapshot<Map<String, QuitPeriodItem>> snapshot){
                 if( snapshot.connectionState == ConnectionState.waiting){
                   return const Center(child: Text('Please wait its loading...'));
                 }else{
@@ -72,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     return ListView.builder(
                         padding: const EdgeInsets.only(top: 10),
                         itemCount: snapshot.data!.length,
-                        itemBuilder: (_,index) =>PeriodWidget(instance: snapshot.data![index],));
-                  }  // snapshot.data  :- get your object which is pass from your downloadData() function
+                        itemBuilder: (_,index) =>PeriodWidget(instance: snapshot.data!.values.toList()[index],));
+                  }
                 }
               },
 

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../providers/quit_period.dart';
 
 class NewQuitPeriod extends StatefulWidget {
-  final Function callSetState;
-  NewQuitPeriod({required this.callSetState});
+  const NewQuitPeriod({Key? key}) : super(key: key);
 
   @override
   State<NewQuitPeriod> createState() => _NewQuitPeriodState();
@@ -14,15 +13,15 @@ class NewQuitPeriod extends StatefulWidget {
 class _NewQuitPeriodState extends State<NewQuitPeriod> {
   final _titleController = TextEditingController();
 
-  void _submitData() {
+  void _submitData(QuitPeriod quitPeriod) {
     final enteredTitle = _titleController.text;
-    final QuitPeriod instance  = QuitPeriod.addQuitPeriod(enteredTitle);
-    widget.callSetState();
+    quitPeriod.addQuitPeriod(enteredTitle);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
+    QuitPeriod quitPeriod = Provider.of<QuitPeriod>(context);
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
@@ -37,13 +36,13 @@ class _NewQuitPeriodState extends State<NewQuitPeriod> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               TextField(
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
                 controller: _titleController,
-                onSubmitted: (_) => _submitData(),
+                onSubmitted: (_) => _submitData(quitPeriod),
               ),
               TextButton(
-                child: Text('Add Quit Period'),
-                onPressed: _submitData,
+                child: const Text('Add Quit Period'),
+                onPressed: ()=>_submitData(quitPeriod),
               ),
             ],
           ),

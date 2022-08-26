@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quit/providers/doing_provider.dart';
 import 'package:quit/widgets/doing_widget.dart';
 
@@ -13,6 +14,7 @@ class QuitPeriodScreen extends StatefulWidget {
 class _QuitPeriodScreenState extends State<QuitPeriodScreen> {
   @override
   Widget build(BuildContext context) {
+    Doing doing = Provider.of<Doing>(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -74,9 +76,9 @@ class _QuitPeriodScreenState extends State<QuitPeriodScreen> {
                   thickness: 1,
                 )),
             Flexible(
-              child: FutureBuilder<List>(
-                future: Doing.getDoings(),
-                builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
+              child: FutureBuilder<Map<String, DoingItem>>(
+                future: doing.getDoings(),
+                builder: (BuildContext context, AsyncSnapshot<Map<String, DoingItem>> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: Text('Please wait its loading...'));
                   } else {
@@ -87,7 +89,7 @@ class _QuitPeriodScreenState extends State<QuitPeriodScreen> {
                           padding: const EdgeInsets.only(top: 17.5),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (_, index) => DoingWidget(
-                                doing: snapshot.data![index],
+                                doing: snapshot.data!.values.toList()[index],
                               ));
                     } // snapshot.data  :- get your object which is pass from your downloadData() function
                   }

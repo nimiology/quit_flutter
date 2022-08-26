@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
 import '../providers/quit_period.dart';
 import '../screens/quit_period_screen.dart';
 
 class PeriodWidget extends StatefulWidget {
-  final QuitPeriod instance;
+  final QuitPeriodItem instance;
 
   const PeriodWidget({Key? key, required this.instance}) : super(key: key);
 
@@ -17,19 +18,22 @@ class _PeriodWidgetState extends State<PeriodWidget> {
   Color gradientColor =
       Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 
+  void _delete(QuitPeriod quitPeriod)async{
+    quitPeriod.delete(widget.instance.id);
+  }
   @override
   Widget build(BuildContext context) {
+    QuitPeriod quitPeriod = Provider.of<QuitPeriod>(context);
     return MaterialButton(
       onPressed: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => QuitPeriodScreen()),
-
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => QuitPeriodScreen()),
         );
       },
       child: Container(
         height: 150,
-        margin: EdgeInsets.all(15),
-        padding: EdgeInsets.only(top: 30, left: 30, right: 30),
+        margin: const EdgeInsets.all(15),
+        padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           gradient: LinearGradient(
@@ -66,17 +70,23 @@ class _PeriodWidgetState extends State<PeriodWidget> {
                           fontWeight: FontWeight.w600),
                     ),
                     Row(
-                      children: const [
-                        Icon(
-                          Icons.edit,
-                          color: Colors.white70,
+                      children: [
+                        InkWell(
+                          onTap: () => null,
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.black.withOpacity(0.4),
+                          ),
                         ),
                         SizedBox(
                           width: 15,
                         ),
-                        Icon(
-                          Icons.delete,
-                          color: Colors.white70,
+                        InkWell(
+                          onTap: (){_delete(quitPeriod);},
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.black.withOpacity(0.4),
+                          ),
                         )
                       ],
                     )

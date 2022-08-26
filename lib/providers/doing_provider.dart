@@ -1,37 +1,55 @@
+import 'package:flutter/cupertino.dart';
 import 'package:quit/helpers/db_helpers.dart';
 
-class Doing {
+class DoingItem {
   String? why;
   final String id;
   final DateTime createdDate;
 
-  Doing({required this.id, required this.createdDate, this.why});
+  DoingItem({required this.id, required this.createdDate, this.why});
 
-  static Doing addDoing(String why) {
+  static DoingItem DoingfromMap(Map data) {
+    return DoingItem(
+        id: data['id'],
+        why: data['title'],
+        createdDate: DateTime.fromMicrosecondsSinceEpoch(data['created_date']));
+  }
+}
+class Doing extends ChangeNotifier{
+  Map<String, DoingItem> _items = {};
+
+  Map<String, DoingItem> get items {
+    return {..._items};
+  }
+
+  Future<Map<String, DoingItem>> getDoings() async {
+    Map<String, DoingItem> _itemss = {};
+    List doingsList = await DBHelper.getData('doing');
+    for (DoingItem i in doingsList.map(
+            (element) => DoingItem.DoingfromMap(element))) {
+      _itemss[i.id] = i;
+    }
+    _items = _itemss;
+    return items;
+  }
+  void addDoing(String why) {
     DateTime time = DateTime.now();
-    Doing instance = Doing(id: time.toString(), why: why, createdDate: time);
+    DoingItem instance = DoingItem(id: time.toString(), why: why, createdDate: time);
     Map<String, Object> data = {
       'id': instance.id,
       'created_date': instance.createdDate.millisecondsSinceEpoch,
     };
     data['why'] = instance.why!;
     DBHelper.insert('doing', data);
-    return instance;
+    _items[instance.id] = instance;
+    notifyListeners();
   }
 
-  static Doing DoingfromMap(Map data) {
-    return Doing(
-        id: data['id'],
-        why: data['title'],
-        createdDate: DateTime.fromMicrosecondsSinceEpoch(data['created_date']));
-  }
-
-  static Future<List> getDoings() async {
-    List QuitPeriodsList = await DBHelper.getData('doing');
-    return QuitPeriodsList.map((element) => Doing.DoingfromMap(element))
-        .toList();
-  }
-  delete()async{
-    await DBHelper.delete("doing", this.id);
+  void delete(String id) async {
+    if (_items.containsKey(id)) {
+      _items.removeWhere((key, value) => key == id);
+      await DBHelper.delete("doing", id);
+      notifyListeners();
+    }
   }
 }

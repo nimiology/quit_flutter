@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quit/providers/doing_provider.dart';
 
 class DoingWidget extends StatefulWidget {
-  final Doing doing;
+  final DoingItem doing;
 
   const DoingWidget({Key? key, required this.doing}) : super(key: key);
 
@@ -14,7 +14,7 @@ class _DoingWidgetState extends State<DoingWidget> {
   @override
   Widget build(BuildContext context) {
     Color errorColor = Theme.of(context).errorColor;
-    Doing doing = widget.doing;
+    DoingItem doing = widget.doing;
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 10),
