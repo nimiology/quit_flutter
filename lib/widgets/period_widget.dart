@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
 
 import '../providers/quit_period.dart';
 import '../screens/quit_period_screen.dart';
@@ -76,8 +77,8 @@ class _PeriodWidgetState extends State<PeriodWidget> {
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "15/30",
+                    Text(
+                      DateFormat('yyyy-MM-dd').format(widget.instance.createdDate),
                       style: TextStyle(
                           color: Colors.white70,
                           fontSize: 15,

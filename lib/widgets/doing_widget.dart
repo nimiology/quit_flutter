@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 import '../widgets/new_bottom_sheet_widget.dart';
 import '../providers/doing_provider.dart';
@@ -60,7 +61,7 @@ class _DoingWidgetState extends State<DoingWidget> {
         ),
         child: ListTile(
           title: Text(
-            '${instance.createdDate.hour}:${instance.createdDate.minute}',
+            DateFormat('HH:mm').format(instance.createdDate),
             style: const TextStyle(color: Colors.white),
           ),
           subtitle: text,
