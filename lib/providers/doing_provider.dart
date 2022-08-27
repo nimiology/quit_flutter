@@ -42,8 +42,7 @@ class Doing extends ChangeNotifier {
     return items;
   }
 
-  void addDoing(String why, String quitPeriodID) {
-    DateTime time = DateTime.now();
+  void addDoing(String why, DateTime time, String quitPeriodID) {
     DoingItem instance =
         DoingItem(id: time.toString(), why: why, createdDate: time, quitPeriodID: quitPeriodID);
     Map<String, Object> data = {

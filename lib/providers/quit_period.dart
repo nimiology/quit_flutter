@@ -26,8 +26,7 @@ class QuitPeriod extends ChangeNotifier {
     return {..._items};
   }
 
-  void addQuitPeriod(String title) {
-    DateTime time = DateTime.now();
+  void addQuitPeriod(String title, DateTime time,) {
     QuitPeriodItem instance =
         QuitPeriodItem(id: time.toString(), title: title, createdDate: time);
     DBHelper.insert('quit_period', {
