@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:quit/providers/quit_period.dart';
 
 import '../helpers/db_helpers.dart';
 
 class QuitPeriodItem {
-  String id;
+  final String id;
   String title;
-  final DateTime createdDate;
+  DateTime createdDate;
 
   QuitPeriodItem(
       {required this.id, required this.title, required this.createdDate});
@@ -26,9 +25,9 @@ class QuitPeriod extends ChangeNotifier {
     return {..._items};
   }
 
-  void addQuitPeriod(String title, DateTime time,) {
+  void addQuitPeriod(String id,String title, DateTime time,) {
     QuitPeriodItem instance =
-        QuitPeriodItem(id: time.toString(), title: title, createdDate: time);
+        QuitPeriodItem(id: id, title: title, createdDate: time);
     DBHelper.insert('quit_period', {
       'id': instance.id,
       'title': instance.title,

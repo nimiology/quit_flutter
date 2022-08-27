@@ -4,6 +4,7 @@ import 'dart:math' as math;
 
 import '../providers/quit_period.dart';
 import '../screens/quit_period_screen.dart';
+import '../widgets/new_bottom_sheet_widget.dart';
 
 class PeriodWidget extends StatefulWidget {
   final QuitPeriodItem instance;
@@ -15,6 +16,19 @@ class PeriodWidget extends StatefulWidget {
 }
 
 class _PeriodWidgetState extends State<PeriodWidget> {
+  void _startAddNewQuitPeriod(BuildContext ctx, QuitPeriod quitPeriod) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewBottomSheet(
+          className: "Quit",
+          fieldText: "title",
+          addFunction: quitPeriod.addQuitPeriod,
+          quitPeriodItem: widget.instance,
+        );
+      },
+    );
+  }
   Color gradientColor =
       Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0);
 
@@ -72,7 +86,7 @@ class _PeriodWidgetState extends State<PeriodWidget> {
                     Row(
                       children: [
                         InkWell(
-                          onTap: () => null,
+                          onTap: () => _startAddNewQuitPeriod(context, quitPeriod),
                           child: Icon(
                             Icons.edit,
                             color: Colors.black.withOpacity(0.4),

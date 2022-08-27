@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/new_bottom_sheet_widget.dart';
 import '../providers/doing_provider.dart';
 
 class DoingWidget extends StatefulWidget {
@@ -13,6 +14,20 @@ class DoingWidget extends StatefulWidget {
 }
 
 class _DoingWidgetState extends State<DoingWidget> {
+  void _startAddNewQuitPeriod(BuildContext ctx, Doing doing) {
+    showModalBottomSheet(
+      context: ctx,
+      builder: (_) {
+        return NewBottomSheet(
+          className: "Quit Period",
+          fieldText: "Why",
+          addFunction: doing.addDoing,
+          quitPeriodID: widget.doing.quitPeriodID,
+          doingInstance: widget.doing,
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     Color errorColor = Theme.of(context).errorColor;
@@ -55,7 +70,7 @@ class _DoingWidgetState extends State<DoingWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 InkWell(
-                  onTap: () => print('sdf'),
+                  onTap: () => _startAddNewQuitPeriod(context, doing),
                   child: Icon(
                     Icons.edit,
                     color: Colors.black.withOpacity(0.4),

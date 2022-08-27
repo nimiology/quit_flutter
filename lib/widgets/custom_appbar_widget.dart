@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/new_quit_period_widget.dart';
+import '../providers/doing_provider.dart';
+import '../providers/quit_period.dart';
+import '../widgets/new_bottom_sheet_widget.dart';
 
 class CustomAppBar extends StatelessWidget {
   String title;
@@ -8,6 +10,8 @@ class CustomAppBar extends StatelessWidget {
   String fieldText;
   Function addFunction;
   String? quitPeriodID;
+  DoingItem? doingInstance;
+  QuitPeriodItem? quitPeriodItem;
 
   CustomAppBar({
     Key? key,
@@ -16,6 +20,8 @@ class CustomAppBar extends StatelessWidget {
     required this.addFunction,
     this.back = false,
     this.quitPeriodID,
+    this.doingInstance,
+    this.quitPeriodItem
   }) : super(key: key);
 
   void _startAddNewQuitPeriod(BuildContext ctx) {
@@ -26,7 +32,9 @@ class CustomAppBar extends StatelessWidget {
           className: title,
           fieldText: fieldText,
           addFunction: addFunction,
-          quitPeriodID: quitPeriodID
+          quitPeriodID: quitPeriodID,
+          quitPeriodItem: quitPeriodItem,
+          doingInstance: doingInstance,
         );
       },
     );

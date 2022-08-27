@@ -5,7 +5,7 @@ import '../helpers/db_helpers.dart';
 class DoingItem {
   String? why;
   final String id;
-  final DateTime createdDate;
+  DateTime createdDate;
   final String quitPeriodID;
 
   DoingItem(
@@ -20,7 +20,6 @@ class DoingItem {
         why: data['why'],
         quitPeriodID: data['quit_period_id'],
         createdDate: DateTime.fromMillisecondsSinceEpoch(data['created_date']));
-
   }
 }
 
@@ -42,9 +41,9 @@ class Doing extends ChangeNotifier {
     return items;
   }
 
-  void addDoing(String why, DateTime time, String quitPeriodID) {
-    DoingItem instance =
-        DoingItem(id: time.toString(), why: why, createdDate: time, quitPeriodID: quitPeriodID);
+  void addDoing(String id, String why, DateTime time, String quitPeriodID) {
+    DoingItem instance = DoingItem(
+        id: id, why: why, createdDate: time, quitPeriodID: quitPeriodID);
     Map<String, Object> data = {
       'id': instance.id,
       'created_date': instance.createdDate.millisecondsSinceEpoch,
@@ -54,6 +53,17 @@ class Doing extends ChangeNotifier {
     DBHelper.insert('doing', data);
     _items[instance.id] = instance;
     notifyListeners();
+  }
+
+  void update(String id, String why, DateTime time) async {
+    if (_items.containsKey(id)) {
+      _items[id]?.createdDate = time;
+      _items[id]?.why = why;
+      final db = await DBHelper.database();
+      await db.rawUpdate(
+          'UPDATE doing SET why = \'${why}\', created_date = \'${time}\'  WHERE id = $id');
+      notifyListeners();
+    }
   }
 
   void delete(String id) async {

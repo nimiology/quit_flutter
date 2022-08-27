@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
+import '../providers/doing_provider.dart';
 import '../providers/quit_period.dart';
 
 class NewBottomSheet extends StatefulWidget {
@@ -10,33 +11,44 @@ class NewBottomSheet extends StatefulWidget {
   String className;
   Function addFunction;
   String? quitPeriodID;
+  DoingItem? doingInstance;
+  QuitPeriodItem? quitPeriodItem;
+  DateTime _selectedDate = DateTime.now();
 
-  NewBottomSheet({
-    Key? key,
-    required this.fieldText,
-    required this.className,
-    required this.addFunction,
-    this.quitPeriodID,
-  }) : super(key: key);
+
+  NewBottomSheet(
+      {Key? key,
+      required this.fieldText,
+      required this.className,
+      required this.addFunction,
+      this.quitPeriodID,
+      this.doingInstance,
+      this.quitPeriodItem})
+      : super(key: key);
 
   @override
   State<NewBottomSheet> createState() => _NewBottomSheetState();
 }
 
 class _NewBottomSheetState extends State<NewBottomSheet> {
-  final _titleController = TextEditingController();
-  DateTime _selectedDate = DateTime.now();
+  final _titleController = TextEditingController(text: '');
+  String? id;
+
 
   void _submitData(QuitPeriod quitPeriod) {
     final String enteredTitle = _titleController.text;
-
-    if (widget.quitPeriodID != null){
-      widget.addFunction(enteredTitle,_selectedDate, widget.quitPeriodID);
+    if (widget.quitPeriodID != null ||
+        (widget.doingInstance == null &&
+        widget.quitPeriodItem==null)) {
+      widget.addFunction(id ?? widget._selectedDate.toString(), enteredTitle,
+          widget._selectedDate, widget.quitPeriodID);
     } else {
-      widget.addFunction(enteredTitle,_selectedDate);
+      widget.addFunction(
+          id ?? widget._selectedDate.toString(), enteredTitle, widget._selectedDate);
     }
     Navigator.of(context).pop();
   }
+
   void _presentDatePicker() {
     showDatePicker(
       context: context,
@@ -48,14 +60,23 @@ class _NewBottomSheetState extends State<NewBottomSheet> {
         return;
       }
       setState(() {
-        _selectedDate = pickedDate;
+        widget._selectedDate = pickedDate;
+        print(widget._selectedDate);
       });
     });
-    print('...');
   }
+
   @override
   Widget build(BuildContext context) {
     QuitPeriod quitPeriod = Provider.of<QuitPeriod>(context);
+    if (widget.doingInstance != null) {
+      _titleController.text = widget.doingInstance!.why ?? '';
+      id = widget.doingInstance!.id;
+    }
+    if (widget.quitPeriodItem != null) {
+      _titleController.text = widget.quitPeriodItem!.title;
+      id = widget.quitPeriodItem!.id;
+    }
     return SingleChildScrollView(
       child: Card(
         elevation: 5,
@@ -80,9 +101,9 @@ class _NewBottomSheetState extends State<NewBottomSheet> {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        _selectedDate == null
+                        widget._selectedDate == null
                             ? 'No Date Chosen!'
-                            : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
+                            : 'Picked Date: ${DateFormat.yMd().format(widget._selectedDate)}',
                       ),
                     ),
                     TextButton(

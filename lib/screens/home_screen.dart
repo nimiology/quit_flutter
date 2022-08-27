@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quit/widgets/new_quit_period_widget.dart';
+import 'package:quit/widgets/new_bottom_sheet_widget.dart';
 
 import '../providers/quit_period.dart';
 import '../widgets/period_widget.dart';
