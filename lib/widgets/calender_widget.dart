@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalenderWidget extends StatefulWidget {
-  const CalenderWidget({Key? key}) : super(key: key);
+  Function changeSelectedDate;
+  CalenderWidget({Key? key, required this.changeSelectedDate}) : super(key: key);
 
   @override
   State<CalenderWidget> createState() => _CalenderWidgetState();
@@ -31,6 +32,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
       onDaySelected: (selectedDay, focusedDay) {
         if (!isSameDay(_selectedDay, selectedDay)) {
           // Call `setState()` when updating the selected day
+          widget.changeSelectedDate(selectedDay);
           setState(() {
             _selectedDay = selectedDay;
             _focusedDay = focusedDay;

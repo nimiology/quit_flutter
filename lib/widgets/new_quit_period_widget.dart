@@ -1,21 +1,38 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/quit_period.dart';
 
-class NewQuitPeriod extends StatefulWidget {
-  const NewQuitPeriod({Key? key}) : super(key: key);
+class NewBottomSheet extends StatefulWidget {
+  String fieldText;
+  String className;
+  Function addFunction;
+  String? quitPeriodID;
+
+  NewBottomSheet({
+    Key? key,
+    required this.fieldText,
+    required this.className,
+    required this.addFunction,
+    this.quitPeriodID,
+  }) : super(key: key);
 
   @override
-  State<NewQuitPeriod> createState() => _NewQuitPeriodState();
+  State<NewBottomSheet> createState() => _NewBottomSheetState();
 }
 
-class _NewQuitPeriodState extends State<NewQuitPeriod> {
+class _NewBottomSheetState extends State<NewBottomSheet> {
   final _titleController = TextEditingController();
 
   void _submitData(QuitPeriod quitPeriod) {
-    final enteredTitle = _titleController.text;
-    quitPeriod.addQuitPeriod(enteredTitle);
+    final String enteredTitle = _titleController.text;
+
+    if (widget.quitPeriodID != null){
+      widget.addFunction(enteredTitle, widget.quitPeriodID);
+    } else {
+      widget.addFunction(enteredTitle);
+    }
     Navigator.of(context).pop();
   }
 
@@ -36,13 +53,13 @@ class _NewQuitPeriodState extends State<NewQuitPeriod> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               TextField(
-                decoration: const InputDecoration(labelText: 'Title'),
+                decoration: InputDecoration(labelText: widget.fieldText),
                 controller: _titleController,
                 onSubmitted: (_) => _submitData(quitPeriod),
               ),
               TextButton(
-                child: const Text('Add Quit Period'),
-                onPressed: ()=>_submitData(quitPeriod),
+                child: Text('Add ${widget.className}'),
+                onPressed: () => _submitData(quitPeriod),
               ),
             ],
           ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quit/providers/doing_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/doing_provider.dart';
 
 class DoingWidget extends StatefulWidget {
   final DoingItem doing;
@@ -14,7 +16,17 @@ class _DoingWidgetState extends State<DoingWidget> {
   @override
   Widget build(BuildContext context) {
     Color errorColor = Theme.of(context).errorColor;
-    DoingItem doing = widget.doing;
+    Doing doing = Provider.of<Doing>(context);
+    DoingItem instance = widget.doing;
+    Text? text;
+    if (instance.why == "") {
+      text = null;
+    } else {
+      text = Text(
+        '${instance.why}',
+        style: const TextStyle(color: Colors.white70),
+      );
+    }
     return Container(
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -33,13 +45,10 @@ class _DoingWidgetState extends State<DoingWidget> {
         ),
         child: ListTile(
           title: Text(
-            '${doing.createdDate.hour}:${doing.createdDate.minute}',
+            '${instance.createdDate.hour}:${instance.createdDate.minute}',
             style: const TextStyle(color: Colors.white),
           ),
-          subtitle: Text(
-            '${doing.why}',
-            style: const TextStyle(color: Colors.white70),
-          ),
+          subtitle: text,
           trailing: SizedBox(
             width: 65,
             child: Row(
@@ -56,7 +65,7 @@ class _DoingWidgetState extends State<DoingWidget> {
                   width: 15,
                 ),
                 InkWell(
-                  onTap: () => print('sdf'),
+                  onTap: () => doing.delete(instance.id),
                   child: Icon(
                     Icons.delete,
                     color: Colors.black.withOpacity(0.4),

@@ -27,7 +27,7 @@ class _PeriodWidgetState extends State<PeriodWidget> {
     return MaterialButton(
       onPressed: () {
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => QuitPeriodScreen()),
+          MaterialPageRoute(builder: (context) => QuitPeriodScreen(quitPeriod: widget.instance,)),
         );
       },
       child: Container(

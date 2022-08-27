@@ -15,7 +15,7 @@ class QuitPeriodItem {
     return QuitPeriodItem(
         id: data['id'],
         title: data['title'],
-        createdDate: DateTime.fromMicrosecondsSinceEpoch(data['created_date']));
+        createdDate: DateTime.fromMillisecondsSinceEpoch(data['created_date']));
   }
 }
 
